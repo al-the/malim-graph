@@ -3,8 +3,9 @@ import './globals.css'
 import { ToastProvider } from '@/components/ui/Toast'
 
 export const metadata: Metadata = {
-  title: 'Malim Knowledge Graph Portal',
+  title: 'MalimDB - build with care by porter',
   description: 'Data entry management for the Malaysian knowledge graph',
+  icons: { icon: '/favicon.svg' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

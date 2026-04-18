@@ -12,7 +12,7 @@ export default async function DashboardPage() {
     <div className="flex flex-col h-full">
       <PageHeader
         title="Dashboard"
-        breadcrumb={['Malim KG Portal']}
+        breadcrumb={['MalimDB']}
       />
       <div className="flex-1 p-6 overflow-y-auto">
         {session.user.role === 'porter' ? (

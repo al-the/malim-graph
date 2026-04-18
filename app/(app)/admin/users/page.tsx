@@ -9,7 +9,7 @@ export default async function UsersPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader title="User Management" breadcrumb={['Malim KG Portal', 'Admin']} />
+      <PageHeader title="User Management" breadcrumb={['MalimDB', 'Admin']} />
       <div className="flex-1 p-6 overflow-hidden">
         <UserManagement currentUserId={session.user.id} />
       </div>

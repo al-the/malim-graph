@@ -9,7 +9,7 @@ export default async function AuditPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader title="Audit Log" breadcrumb={['Malim KG Portal', 'Admin']} />
+      <PageHeader title="Audit Log" breadcrumb={['MalimDB', 'Admin']} />
       <div className="flex-1 p-6 overflow-hidden">
         <AuditLogTable />
       </div>

@@ -86,9 +86,14 @@ export function Sidebar({ role, name }: SidebarProps) {
   return (
     <aside className="w-[220px] flex-shrink-0 bg-bg-surface border-r border-border flex flex-col h-screen sticky top-0 overflow-y-auto">
       {/* Wordmark */}
-      <div className="px-4 py-4 border-b border-border">
-        <div className="text-primary font-semibold text-lg leading-tight">Malim</div>
-        <div className="text-2xs text-text-secondary leading-tight">Knowledge Graph Portal</div>
+      <div className="px-4 py-4 border-b border-border flex items-center gap-2">
+        <svg className="w-5 h-5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <ellipse cx="12" cy="5" rx="9" ry="3.5"/>
+          <path d="M3 5v4.5C3 11.43 7.03 13 12 13s9-1.57 9-3.5V5"/>
+          <path d="M3 9.5v4.5C3 15.93 7.03 17.5 12 17.5s9-1.57 9-3.5V9.5"/>
+          <path d="M3 14v5c0 1.93 4.03 3.5 9 3.5s9-1.57 9-3.5v-5"/>
+        </svg>
+        <span className="text-primary font-semibold text-base leading-tight">MalimDB</span>
       </div>
 
       {/* Nav */}

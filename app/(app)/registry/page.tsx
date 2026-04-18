@@ -9,7 +9,7 @@ export default async function RegistryPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader title="Indicator Registry" breadcrumb={['Malim KG Portal', 'Registry']} />
+      <PageHeader title="Indicator Registry" breadcrumb={['MalimDB', 'Registry']} />
       <div className="flex-1 p-6 overflow-hidden">
         <IndicatorRegistry />
       </div>

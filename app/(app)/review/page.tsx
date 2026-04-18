@@ -10,7 +10,7 @@ export default async function ReviewPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader title="Review Queue" breadcrumb={['Malim KG Portal']} />
+      <PageHeader title="Review Queue" breadcrumb={['MalimDB']} />
       <div className="flex-1 p-6 overflow-hidden">
         <ReviewQueue />
       </div>

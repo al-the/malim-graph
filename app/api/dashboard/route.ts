@@ -63,7 +63,16 @@ export async function GET() {
       let extra: Record<string, unknown> = {}
       if (role === 'admin') {
         const conflicts = all.filter((s) => s.s4_has_conflict === 'yes' && !s.conflict_resolved).length
-        extra = { unresolved_conflicts: conflicts }
+
+        // Pending user registrations
+        const { resources: pendingUsers } = await containers
+          .users()
+          .items.query({
+            query: "SELECT c.id, c.name, c.email, c.role, c.porter_id, c.created_at FROM c WHERE c.status = 'pending' ORDER BY c.created_at ASC",
+          })
+          .fetchAll()
+
+        extra = { unresolved_conflicts: conflicts, pending_registrations: pendingUsers }
       }
 
       return NextResponse.json({

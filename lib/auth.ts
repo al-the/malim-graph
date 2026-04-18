@@ -23,7 +23,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             .fetchAll()
 
           const user = resources[0]
-          if (!user || user.status !== 'active') return null
+          if (!user) return null
+
+          if (user.status === 'pending') throw new Error('PENDING_APPROVAL')
+          if (user.status === 'suspended') throw new Error('ACCOUNT_SUSPENDED')
+          if (user.status !== 'active') return null
 
           const valid = await bcrypt.compare(credentials.password as string, user.password)
           if (!valid) return null

@@ -67,6 +67,19 @@ export function UserManagement({ currentUserId }: { currentUserId: string }) {
     }
   }
 
+  async function handleChangeStatus(userId: string, status: 'active' | 'suspended') {
+    try {
+      await fetch(`/api/users/${userId}`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      })
+      toast.success(status === 'active' ? 'Account approved.' : 'Account rejected.')
+      load()
+    } catch {
+      toast.error('Failed.')
+    }
+  }
+
   async function handleSuspend(user: UserRow) {
     const newStatus = user.status === 'active' ? 'suspended' : 'active'
     if (newStatus === 'suspended' && !confirm(`Suspend ${user.name}?`)) return
@@ -117,17 +130,36 @@ export function UserManagement({ currentUserId }: { currentUserId: string }) {
                       <td className="text-text-secondary">{u.email}</td>
                       <td><Badge variant={u.role as 'admin' | 'supervisor' | 'porter'} /></td>
                       <td className="mono text-text-secondary">{u.porter_id || '—'}</td>
-                      <td><Badge variant={u.status as 'active' | 'suspended'} /></td>
+                      <td><Badge variant={u.status as 'active' | 'suspended' | 'pending'}>{u.status === 'pending' ? 'Pending' : u.status === 'active' ? 'Active' : 'Suspended'}</Badge></td>
                       <td className="mono text-text-secondary">{u.last_login?.slice(0, 10) || '—'}</td>
                       <td>
                         <div className="flex gap-2">
-                          <button onClick={() => { setEditing({ ...u }); setIsNew(false) }}
-                            className="text-2xs text-accent hover:underline">Edit</button>
-                          {u.id !== currentUserId && (
-                            <button onClick={() => handleSuspend(u)}
-                              className={`text-2xs hover:underline ${u.status === 'active' ? 'text-warning' : 'text-success'}`}>
-                              {u.status === 'active' ? 'Suspend' : 'Reactivate'}
-                            </button>
+                          {u.status === 'pending' ? (
+                            <>
+                              <button
+                                onClick={() => handleChangeStatus(u.id, 'active')}
+                                className="text-2xs text-success hover:underline font-medium"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                onClick={() => handleChangeStatus(u.id, 'suspended')}
+                                className="text-2xs text-danger hover:underline"
+                              >
+                                Reject
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button onClick={() => { setEditing({ ...u }); setIsNew(false) }}
+                                className="text-2xs text-accent hover:underline">Edit</button>
+                              {u.id !== currentUserId && (
+                                <button onClick={() => handleSuspend(u)}
+                                  className={`text-2xs hover:underline ${u.status === 'active' ? 'text-warning' : 'text-success'}`}>
+                                  {u.status === 'active' ? 'Suspend' : 'Reactivate'}
+                                </button>
+                              )}
+                            </>
                           )}
                         </div>
                       </td>

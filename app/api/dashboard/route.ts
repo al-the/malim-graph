@@ -26,7 +26,15 @@ export async function GET() {
         .sort((a, b) => b.submitted_at.localeCompare(a.submitted_at))
         .slice(0, 10)
 
-      return NextResponse.json({ role, total_submitted: resources.length, approved, pending, rejected, recent })
+      // All system-wide pending + approved titles to prevent duplicate submissions
+      const { resources: allActive } = await containers
+        .submissions()
+        .items.query<Pick<Submission, 'id' | 's1_title_en' | 's1_source_authority' | 'status' | 'porter_id'>>({
+          query: "SELECT c.id, c.s1_title_en, c.s1_source_authority, c.status, c.porter_id FROM c WHERE c.status IN ('pending', 'approved')",
+        })
+        .fetchAll()
+
+      return NextResponse.json({ role, total_submitted: resources.length, approved, pending, rejected, recent, all_active_titles: allActive })
     }
 
     if (role === 'supervisor' || role === 'admin') {

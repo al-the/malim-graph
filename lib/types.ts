@@ -167,11 +167,6 @@ export interface DashboardStats {
 export const SOURCE_AUTHORITIES = [
   'Department of Statistics Malaysia',
   'Bursa Malaysia',
-  'Parliament of Malaysia',
-  'Attorney Generals Chambers of Malaysia',
-  'Securities Commission',
-  'Bank Negara Malaysia',
-  'Other',
 ] as const
 
 export const DOC_TYPES = [
@@ -186,54 +181,46 @@ export const DOC_TYPES = [
   'Other',
 ] as const
 
-export const TOPICS = [
-/* --- DOSM / STATISTICAL --- */
-  'Current Population Estimates', 'Births & Deaths', 'Causes of Death', 
+export const DOSM_TOPICS = [
+  'Current Population Estimates', 'Births & Deaths', 'Causes of Death',
   'Life Expectancy', 'Marriage & Divorce', 'Migration', 'Population Projection',
   'Population Census', 'Economic Census', 'Agricultural Census', 'Oil & Gas Census',
-  'Gross Domestic Product', 'Balance of Payments', 
+  'Gross Domestic Product', 'Balance of Payments',
   'International Investment Position', 'Satellite Accounts & Others',
-  'Consumer Price Index', 'Producer Price Index', 
+  'Consumer Price Index', 'Producer Price Index',
   'Services Producer Price Index', 'Building Materials Cost Index',
-  'Labour Force Survey', 'Informal Sector Workforce', 'Salaries & Wages', 
+  'Labour Force Survey', 'Informal Sector Workforce', 'Salaries & Wages',
   'Labour Productivity', 'Employment', 'Graduates', 'Job Market Insights',
-  'Services', 'Manufacturing', 'Agriculture', 'Mining', 'Construction', 
+  'Services', 'Manufacturing', 'Agriculture', 'Mining', 'Construction',
   'External Trade', 'Tourism', 'Creative Industry', 'Businesses',
-  'Cost of Living', 'Household Income & Expenditure', 'Environment', 'Crime', 
-  'Persons With Disabilities', 'Children', 'Bumiputera', 'Women Empowerment', 
+  'Cost of Living', 'Household Income & Expenditure', 'Environment', 'Crime',
+  'Persons With Disabilities', 'Children', 'Bumiputera', 'Women Empowerment',
   'ICT Use & Access', 'Well-Being', 'Sustainable Development Goals',
   'Monthly Reviews', 'Quarterly Reviews', 'Annual Reviews',
+] as const
 
-  /* --- BURSA / MARKET ANNOUNCEMENTS --- */
-  // Financial & Audits
+export const BURSA_TOPICS = [
   'Quarterly report on consolidated results', 'Annual Audited Accounts', 'Annual Report',
-  
-  // Entitlements
   'Dividends', 'Bonus Issue', 'Right Issue', 'Share Split',
-  
-  // Shareholdings & Dealings
-  'Changes in Substantial Shareholder Interest (Section 138)', 
-  'Changes in Director Interest (Section 219)', 
+  'Changes in Substantial Shareholder Interest (Section 138)',
+  'Changes in Director Interest (Section 219)',
   'Dealings in Listed Securities (Chapter 14)', 'Shares Buy-Back',
-  
-  // General Meetings
   'Notice of Meeting', 'Outcome of Meeting', 'Proxy Forms',
-  
-  // Corporate Information
-  'Change of Address', 'Change of Company Secretary', 'Change in Boardroom', 
+  'Change of Address', 'Change of Company Secretary', 'Change in Boardroom',
   'Change in Audit Committee', 'Change in Risk Committee',
-  
-  // Listing & IPO
-  'Initial Public Offering (IPO)', 'Admission to LEAP Market', 
+  'Initial Public Offering (IPO)', 'Admission to LEAP Market',
   'Additional Listing Announcement', 'Delisting of Securities', 'Transfer of Listing',
-  
-  // Proposals & Transactions
   'Memorandum of Understanding', 'Material Litigation', 'Multiple Proposals',
   'Transactions (Chapter 10)', 'Related Party Transactions',
-  
-  // Market Status
   'Unusual Market Activity (UMA)', 'Reply to Query', 'Investor Alert',
 ] as const
+
+export const TOPICS = [...DOSM_TOPICS, ...BURSA_TOPICS] as const
+
+export const TOPICS_BY_AUTHORITY: Record<string, readonly string[]> = {
+  'Department of Statistics Malaysia': DOSM_TOPICS,
+  'Bursa Malaysia': BURSA_TOPICS,
+}
 
 export const GEOGRAPHIES = [
   'National',

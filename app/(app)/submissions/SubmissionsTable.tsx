@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, Fragment } from 'react'
 import { Badge } from '@/components/ui/Badge'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { SkeletonTable } from '@/components/ui/Skeleton'
@@ -92,8 +92,8 @@ export function SubmissionsTable({ role }: { role: string }) {
                 <EmptyState message="No submissions found" description="Try adjusting your filters." />
               ) : (
                 submissions.map((s) => (
-                  <>
-                    <tr key={s.id} className="cursor-pointer" onClick={() => setSelected(s)}>
+                  <Fragment key={s.id}>
+                    <tr className="cursor-pointer" onClick={() => setSelected(s)}>
                       <td>
                         <span className="block max-w-[200px] truncate" title={s.s1_title_en}>
                           {s.s1_title_en}
@@ -122,7 +122,7 @@ export function SubmissionsTable({ role }: { role: string }) {
                       </td>
                     </tr>
                     {expandedReject === s.id && s.status === 'rejected' && (
-                      <tr key={`${s.id}-reject`}>
+                      <tr>
                         <td colSpan={6} className="bg-red-50 px-4 py-3">
                           <p className="text-2xs font-medium text-danger mb-1">Rejection reason:</p>
                           <p className="text-xs text-text-primary">{s.review_note || '(No reason provided)'}</p>
@@ -130,14 +130,14 @@ export function SubmissionsTable({ role }: { role: string }) {
                       </tr>
                     )}
                     {s.status === 'flagged' && expandedReject === s.id && (
-                      <tr key={`${s.id}-flag`}>
+                      <tr>
                         <td colSpan={6} className="bg-purple-50 px-4 py-3">
                           <p className="text-2xs font-medium text-pending mb-1">Flag note:</p>
                           <p className="text-xs text-text-primary">{s.review_note || '(No note provided)'}</p>
                         </td>
                       </tr>
                     )}
-                  </>
+                  </Fragment>
                 ))
               )}
             </tbody>

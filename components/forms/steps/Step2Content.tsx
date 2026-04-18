@@ -26,7 +26,7 @@ export function Step2Content({ data, update }: Props) {
   const availableTopics = TOPICS_BY_AUTHORITY[authority] ?? TOPICS
 
   const addStat = () => {
-    if (stats.length >= 5) return
+    if (stats.length >= 20) return
     update({ s2_key_stats: [...stats, { label: '', value: '', unit: '', period: '', geography: '' }] })
   }
 
@@ -110,7 +110,7 @@ export function Step2Content({ data, update }: Props) {
             </div>
           </div>
         ))}
-        {stats.length < 5 && (
+        {stats.length < 20 && (
           <Button variant="ghost" size="sm" onClick={addStat} className="self-start mt-1">
             + Add another statistic
           </Button>

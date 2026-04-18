@@ -1,5 +1,5 @@
 export type UserRole = 'admin' | 'supervisor' | 'porter'
-export type UserStatus = 'active' | 'suspended'
+export type UserStatus = 'active' | 'suspended' | 'pending'
 
 export interface User {
   id: string

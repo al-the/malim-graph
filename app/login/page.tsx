@@ -9,18 +9,18 @@ import { Button } from '@/components/ui/Button'
 
 type ErrorKind = 'invalid' | 'pending' | 'suspended' | ''
 
-const ERROR_MESSAGES: Record<Exclude<ErrorKind, ''>, { text: string; style: string }> = {
+const ERROR_UI: Record<Exclude<ErrorKind, ''>, { text: string; cls: string }> = {
   invalid: {
     text: 'Invalid email or password.',
-    style: 'text-danger bg-red-50 border-red-200',
+    cls: 'text-danger bg-red-50 border-red-200',
   },
   pending: {
-    text: 'Your account is awaiting admin approval. You will receive access once an administrator reviews your request.',
-    style: 'text-warning bg-amber-50 border-amber-200',
+    text: 'Your account is awaiting admin approval. You will be notified once an administrator reviews your request.',
+    cls: 'text-warning bg-amber-50 border-amber-200',
   },
   suspended: {
     text: 'Your account has been suspended. Please contact an administrator.',
-    style: 'text-danger bg-red-50 border-red-200',
+    cls: 'text-danger bg-red-50 border-red-200',
   },
 }
 
@@ -35,12 +35,23 @@ export default function LoginPage() {
     e.preventDefault()
     setErrorKind('')
     setLoading(true)
+
     try {
+      // Check account status first so we can show a specific message.
+      const preRes = await fetch('/api/auth/preflight', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const { status } = await preRes.json()
+
+      if (status === 'pending') { setErrorKind('pending'); return }
+      if (status === 'suspended') { setErrorKind('suspended'); return }
+
+      // Account is active (or not found — let signIn return generic error).
       const res = await signIn('credentials', { email, password, redirect: false })
       if (res?.error) {
-        if (res.error.includes('PENDING_APPROVAL')) setErrorKind('pending')
-        else if (res.error.includes('ACCOUNT_SUSPENDED')) setErrorKind('suspended')
-        else setErrorKind('invalid')
+        setErrorKind('invalid')
       } else {
         router.push('/dashboard')
         router.refresh()
@@ -50,7 +61,7 @@ export default function LoginPage() {
     }
   }
 
-  const errInfo = errorKind ? ERROR_MESSAGES[errorKind] : null
+  const errInfo = errorKind ? ERROR_UI[errorKind] : null
 
   return (
     <div className="min-h-screen bg-bg-base flex items-center justify-center p-4">
@@ -83,7 +94,7 @@ export default function LoginPage() {
             />
 
             {errInfo && (
-              <p className={`text-2xs border rounded px-3 py-2 ${errInfo.style}`}>{errInfo.text}</p>
+              <p className={`text-2xs border rounded px-3 py-2 ${errInfo.cls}`}>{errInfo.text}</p>
             )}
 
             <Button type="submit" loading={loading} className="w-full mt-2">

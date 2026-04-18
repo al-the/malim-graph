@@ -5,6 +5,7 @@ import { containers } from './cosmos'
 import type { User } from './types'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -23,16 +24,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             .fetchAll()
 
           const user = resources[0]
-          if (!user) return null
-
-          if (user.status === 'pending') throw new Error('PENDING_APPROVAL')
-          if (user.status === 'suspended') throw new Error('ACCOUNT_SUSPENDED')
-          if (user.status !== 'active') return null
+          // Only allow active users — pending/suspended return null here;
+          // the login page uses /api/auth/preflight to surface a specific message.
+          if (!user || user.status !== 'active') return null
 
           const valid = await bcrypt.compare(credentials.password as string, user.password)
           if (!valid) return null
 
-          // Update last_login
           await containers.users().item(user.id, user.role).patch([
             { op: 'replace', path: '/last_login', value: new Date().toISOString() },
           ])

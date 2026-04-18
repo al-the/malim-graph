@@ -4,6 +4,25 @@ import bcrypt from 'bcryptjs'
 import { containers } from './cosmos'
 import type { User } from './types'
 
+// Auth.js v5 passes NEXTAUTH_URL / AUTH_URL directly to new URL().
+// Vercel's VERCEL_URL and user-supplied values are often bare hostnames
+// (no protocol), which causes "TypeError: Invalid URL".
+// Normalise all of them before NextAuth initialises.
+function prefixHTTPS(val: string | undefined): string | undefined {
+  if (!val) return val
+  return /^https?:\/\//.test(val) ? val : `https://${val}`
+}
+if (process.env.NEXTAUTH_URL) {
+  process.env.NEXTAUTH_URL = prefixHTTPS(process.env.NEXTAUTH_URL)
+}
+if (process.env.AUTH_URL) {
+  process.env.AUTH_URL = prefixHTTPS(process.env.AUTH_URL)
+}
+// Synthesise AUTH_URL from Vercel's automatic VERCEL_URL when nothing else is set.
+if (!process.env.AUTH_URL && !process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
+  process.env.AUTH_URL = `https://${process.env.VERCEL_URL}`
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
   providers: [

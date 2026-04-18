@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 
   try {
     let query = 'SELECT * FROM c WHERE 1=1'
-    const params: { name: string; value: unknown }[] = []
+    const params: { name: string; value: string | number }[] = []
 
     if (session.user.role === 'porter') {
       query += ' AND c.porter_id = @porterId'

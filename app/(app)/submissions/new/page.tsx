@@ -12,7 +12,7 @@ export default async function NewSubmissionPage() {
     <div className="flex flex-col h-full">
       <PageHeader
         title="Submit Document"
-        breadcrumb={['Malim KG Portal', 'My Submissions']}
+        breadcrumb={['MalimDB', 'My Submissions']}
       />
       <div className="flex-1 p-6 overflow-y-auto">
         <SubmissionForm />

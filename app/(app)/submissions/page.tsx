@@ -16,7 +16,7 @@ export default async function SubmissionsPage() {
     <div className="flex flex-col h-full">
       <PageHeader
         title={title}
-        breadcrumb={['Malim KG Portal']}
+        breadcrumb={['MalimDB']}
         actions={
           isPorter ? (
             <Link href="/submissions/new">

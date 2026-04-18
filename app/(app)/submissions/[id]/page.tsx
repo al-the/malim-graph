@@ -28,7 +28,7 @@ export default async function SubmissionDetailPage({ params }: { params: { id: s
     <div className="flex flex-col h-full">
       <PageHeader
         title={sub.s1_title_en || 'Submission'}
-        breadcrumb={['Malim KG Portal', 'Submissions']}
+        breadcrumb={['MalimDB', 'Submissions']}
       />
       <div className="flex-1 p-6 overflow-y-auto">
         <div className="max-w-2xl">

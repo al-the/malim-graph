@@ -9,7 +9,7 @@ export default async function ConflictsPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader title="Conflict Queue" breadcrumb={['Malim KG Portal', 'Review']} />
+      <PageHeader title="Conflict Queue" breadcrumb={['MalimDB', 'Review']} />
       <div className="flex-1 p-6 overflow-hidden">
         <ConflictQueue />
       </div>

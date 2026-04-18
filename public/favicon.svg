@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Retro database cylinder -->
+  <ellipse cx="16" cy="8" rx="11" ry="4" fill="#1B3A6B"/>
+  <rect x="5" y="8" width="22" height="16" fill="#1B3A6B"/>
+  <ellipse cx="16" cy="24" rx="11" ry="4" fill="#2E7D9B"/>
+  <!-- Mid-line separators for retro stacked look -->
+  <ellipse cx="16" cy="14" rx="11" ry="3.5" fill="none" stroke="#2E7D9B" stroke-width="1.5"/>
+  <ellipse cx="16" cy="19" rx="11" ry="3.5" fill="none" stroke="#2E7D9B" stroke-width="1.5"/>
+  <!-- Top highlight -->
+  <ellipse cx="16" cy="8" rx="11" ry="4" fill="#2E7D9B"/>
+  <ellipse cx="16" cy="8" rx="8" ry="2.5" fill="none" stroke="#5BA3C0" stroke-width="1" opacity="0.6"/>
+</svg>

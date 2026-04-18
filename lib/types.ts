@@ -63,6 +63,7 @@ export interface Submission {
   s1_source_authority: string
   s1_doc_type: string
   s1_url: string
+  s1_source_url?: string
   s1_published_date: string
   s1_ref_period_start: string | null
   s1_ref_period_end: string | null

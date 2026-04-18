@@ -37,7 +37,8 @@ export function SubmissionDetail({ submission: s }: Props) {
         <Row label="Title (Malay)" value={s.s1_title_ms} />
         <Row label="Source authority" value={s.s1_source_authority} />
         <Row label="Document type" value={s.s1_doc_type} />
-        <Row label="URL" value={s.s1_url} />
+        <Row label="Document link" value={s.s1_url} />
+        <Row label="Source page" value={s.s1_source_url} />
         <Row label="Published" value={s.s1_published_date} />
         <Row label="Reference period" value={s.s1_ref_period_start ? `${s.s1_ref_period_start} → ${s.s1_ref_period_end}` : null} />
         <Row label="Language" value={s.s1_language} />

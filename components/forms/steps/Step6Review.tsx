@@ -68,7 +68,8 @@ export function Step6Review({ data, update, onSubmit, submitting }: Props) {
           { label: 'Title (MS)', value: data.s1_title_ms as string },
           { label: 'Source', value: data.s1_source_authority as string },
           { label: 'Doc type', value: data.s1_doc_type as string },
-          { label: 'URL', value: data.s1_url as string },
+          { label: 'Document link', value: data.s1_url as string },
+          { label: 'Source page', value: data.s1_source_url as string },
           { label: 'Published', value: data.s1_published_date as string },
           { label: 'Language', value: data.s1_language as string[] },
         ]} />

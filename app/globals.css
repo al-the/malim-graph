@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base: #F7F8FA;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #EEF0F4;
+  --border: #D8DCE6;
+  --primary: #1B3A6B;
+  --primary-hover: #142E57;
+  --accent: #2E7D9B;
+  --text-primary: #1A1F2E;
+  --text-secondary: #5A6278;
+  --text-disabled: #9BA3B5;
+  --success: #1D7A4F;
+  --warning: #B45309;
+  --danger: #C0392B;
+  --pending: #6B4EA6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-subtle); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-disabled); }
+
+/* Focus ring utility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Table styles */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-surface);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+  z-index: 1;
+}
+.data-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 150ms ease;
+}
+.data-table tbody tr:nth-child(even) {
+  background: var(--bg-subtle);
+}
+.data-table tbody tr:hover {
+  background: #E8EAF0;
+}
+.data-table tbody td {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+/* Monospace for IDs / codes */
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+
+/* Transitions */
+.transition-base {
+  transition: all 150ms ease;
+}
+
+/* Skeleton loader */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-subtle) 25%, var(--border) 50%, var(--bg-subtle) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}

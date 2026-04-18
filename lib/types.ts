@@ -165,23 +165,20 @@ export interface DashboardStats {
 }
 
 export const SOURCE_AUTHORITIES = [
-  'DOSM',
-  'Bank Negara Malaysia',
+  'Department of Statistics Malaysia',
   'Bursa Malaysia',
   'Parliament of Malaysia',
-  'LKIM',
-  'EPU',
-  'MCMC',
-  'Ministry of Health',
-  'Ministry of Education',
+  'Attorney Generals Chambers of Malaysia',
   'Securities Commission',
+  'Bank Negara Malaysia',
   'Other',
 ] as const
 
 export const DOC_TYPES = [
   'Statistical Report',
+  'Study Report',
   'Annual Report',
-  'Parliamentary Record',
+  'Hansard',
   'News Article',
   'Policy or Regulation',
   'Press Release',
@@ -190,21 +187,39 @@ export const DOC_TYPES = [
 ] as const
 
 export const TOPICS = [
-  'Income & Poverty',
-  'Employment',
-  'Education',
-  'Health',
-  'Housing',
-  'Finance',
-  'Trade',
-  'Demographics',
-  'Environment',
-  'Politics',
-  'Corporate',
-  'Fisheries',
-  'Digital Economy',
-  'Governance',
-  'Other',
+  // Population & Demography
+  'Current Population Estimates', 'Births & Deaths', 'Causes of Death', 
+  'Life Expectancy', 'Marriage & Divorce', 'Migration', 'Population Projection',
+  
+  // Census
+  'Population Census', 'Economic Census', 'Agricultural Census', 'Oil & Gas Census',
+  
+  // National Accounts
+  'Gross Domestic Product', 'Balance of Payments', 
+  'International Investment Position', 'Satellite Accounts & Others',
+  
+  // Prices
+  'Consumer Price Index', 'Producer Price Index', 
+  'Services Producer Price Index', 'Building Materials Cost Index',
+  
+  // Labour
+  'Labour Force Survey', 'Informal Sector Workforce', 'Salaries & Wages', 
+  'Formal Sector Wages', 'Labour Productivity', 'Employment', 'Graduates', 
+  'Job Market Insights', 'Occupational Accident and Disease', 'Labour Market Review',
+  
+  // Economy
+  'Services', 'Manufacturing', 'Agriculture', 'Mining', 'Construction', 
+  'External Trade', 'Tourism', 'Creative Industry', 'Businesses', 'Composite Indicators',
+  
+  // Society
+  'Cost of Living', 'Household Income & Expenditure', 'Other Household Indicators', 
+  'Environment', 'Crime', 'Persons With Disabilities', 'Children', 'Bumiputera', 
+  'Women Empowerment', 'ICT Use & Access', 'Well-Being', 'Sustainable Development Goals', 
+  'Human Development Index', 'Happiness Index', 'Impact of Floods', 
+  'Socioeconomy by District', 'Socioeconomy by State',
+  
+  // Statistical Reviews
+  'Monthly Reviews', 'Quarterly Reviews', 'Annual Reviews',
 ] as const
 
 export const GEOGRAPHIES = [
@@ -228,14 +243,18 @@ export const GEOGRAPHIES = [
 ] as const
 
 export const INDICATOR_CATEGORIES = [
-  'Economic',
+  'Population & Demography',
+  'Census',
+  'National Accounts',
+  'Prices',
+  'Labour',
+  'Economy',
+  'Society',
+  'Statistical Reviews',
   'Social',
   'Environmental',
-  'Governance',
   'Digital',
   'Financial',
-  'Demographics',
-  'Trade',
   'Education',
   'Health',
   'Other',

@@ -33,7 +33,7 @@ export function Step4Connections({ data, update }: Props) {
     <div className="p-6 flex flex-col gap-5">
       <div>
         <h2 className="text-sm font-semibold text-text-primary">4. How does this document connect?</h2>
-        <p className="text-2xs text-text-secondary mt-1">This is the most important section. Think about what else you've read that relates to this document.</p>
+        <p className="text-2xs text-text-secondary mt-1">This is the most important section. Think about what else you&apos;ve read that relates to this document.</p>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -50,7 +50,7 @@ export function Step4Connections({ data, update }: Props) {
           {/* Cited documents */}
           <div className="flex flex-col gap-2">
             <label className="text-2xs font-medium text-text-primary">Which documents does it explicitly cite?</label>
-            <p className="text-2xs text-text-secondary">Name + publisher is enough. E.g. 'Mid-Term Review of 12th Malaysia Plan, EPU, 2023'</p>
+            <p className="text-2xs text-text-secondary">Name + publisher is enough. E.g. &apos;Mid-Term Review of 12th Malaysia Plan, EPU, 2023&apos;</p>
             {citedDocs.map((doc, i) => (
               <div key={i} className="flex gap-2">
                 <input value={doc} onChange={(e) => {

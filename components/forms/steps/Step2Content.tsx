@@ -48,7 +48,7 @@ export function Step2Content({ data, update }: Props) {
         <label className="text-2xs font-medium text-text-primary">
           In one sentence, what is the main point of this document? <span className="text-danger">*</span>
         </label>
-        <p className="text-2xs text-text-secondary">Write as if explaining to a curious colleague who hasn't read it.</p>
+        <p className="text-2xs text-text-secondary">Write as if explaining to a curious colleague who hasn&apos;t read it.</p>
         <textarea
           maxLength={150}
           rows={3}

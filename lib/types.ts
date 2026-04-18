@@ -187,39 +187,52 @@ export const DOC_TYPES = [
 ] as const
 
 export const TOPICS = [
-  // Population & Demography
+/* --- DOSM / STATISTICAL --- */
   'Current Population Estimates', 'Births & Deaths', 'Causes of Death', 
   'Life Expectancy', 'Marriage & Divorce', 'Migration', 'Population Projection',
-  
-  // Census
   'Population Census', 'Economic Census', 'Agricultural Census', 'Oil & Gas Census',
-  
-  // National Accounts
   'Gross Domestic Product', 'Balance of Payments', 
   'International Investment Position', 'Satellite Accounts & Others',
-  
-  // Prices
   'Consumer Price Index', 'Producer Price Index', 
   'Services Producer Price Index', 'Building Materials Cost Index',
-  
-  // Labour
   'Labour Force Survey', 'Informal Sector Workforce', 'Salaries & Wages', 
-  'Formal Sector Wages', 'Labour Productivity', 'Employment', 'Graduates', 
-  'Job Market Insights', 'Occupational Accident and Disease', 'Labour Market Review',
-  
-  // Economy
+  'Labour Productivity', 'Employment', 'Graduates', 'Job Market Insights',
   'Services', 'Manufacturing', 'Agriculture', 'Mining', 'Construction', 
-  'External Trade', 'Tourism', 'Creative Industry', 'Businesses', 'Composite Indicators',
-  
-  // Society
-  'Cost of Living', 'Household Income & Expenditure', 'Other Household Indicators', 
-  'Environment', 'Crime', 'Persons With Disabilities', 'Children', 'Bumiputera', 
-  'Women Empowerment', 'ICT Use & Access', 'Well-Being', 'Sustainable Development Goals', 
-  'Human Development Index', 'Happiness Index', 'Impact of Floods', 
-  'Socioeconomy by District', 'Socioeconomy by State',
-  
-  // Statistical Reviews
+  'External Trade', 'Tourism', 'Creative Industry', 'Businesses',
+  'Cost of Living', 'Household Income & Expenditure', 'Environment', 'Crime', 
+  'Persons With Disabilities', 'Children', 'Bumiputera', 'Women Empowerment', 
+  'ICT Use & Access', 'Well-Being', 'Sustainable Development Goals',
   'Monthly Reviews', 'Quarterly Reviews', 'Annual Reviews',
+
+  /* --- BURSA / MARKET ANNOUNCEMENTS --- */
+  // Financial & Audits
+  'Quarterly report on consolidated results', 'Annual Audited Accounts', 'Annual Report',
+  
+  // Entitlements
+  'Dividends', 'Bonus Issue', 'Right Issue', 'Share Split',
+  
+  // Shareholdings & Dealings
+  'Changes in Substantial Shareholder Interest (Section 138)', 
+  'Changes in Director Interest (Section 219)', 
+  'Dealings in Listed Securities (Chapter 14)', 'Shares Buy-Back',
+  
+  // General Meetings
+  'Notice of Meeting', 'Outcome of Meeting', 'Proxy Forms',
+  
+  // Corporate Information
+  'Change of Address', 'Change of Company Secretary', 'Change in Boardroom', 
+  'Change in Audit Committee', 'Change in Risk Committee',
+  
+  // Listing & IPO
+  'Initial Public Offering (IPO)', 'Admission to LEAP Market', 
+  'Additional Listing Announcement', 'Delisting of Securities', 'Transfer of Listing',
+  
+  // Proposals & Transactions
+  'Memorandum of Understanding', 'Material Litigation', 'Multiple Proposals',
+  'Transactions (Chapter 10)', 'Related Party Transactions',
+  
+  // Market Status
+  'Unusual Market Activity (UMA)', 'Reply to Query', 'Investor Alert',
 ] as const
 
 export const GEOGRAPHIES = [
@@ -243,6 +256,7 @@ export const GEOGRAPHIES = [
 ] as const
 
 export const INDICATOR_CATEGORIES = [
+  // DOSM Publication Pillars
   'Population & Demography',
   'Census',
   'National Accounts',
@@ -251,11 +265,15 @@ export const INDICATOR_CATEGORIES = [
   'Economy',
   'Society',
   'Statistical Reviews',
-  'Social',
-  'Environmental',
-  'Digital',
-  'Financial',
-  'Education',
-  'Health',
-  'Other',
+  
+  // Bursa Malaysia Announcement Categories
+  'Financial Results',
+  'Annual Reports & Audited Accounts',
+  'Entitlements',
+  'Changes in Shareholdings',
+  'Corporate Information',
+  'General Meetings',
+  'Listing & Quotation',
+  'Corporate Exercises & Proposals',
+  'Trading & Market Updates',
 ] as const

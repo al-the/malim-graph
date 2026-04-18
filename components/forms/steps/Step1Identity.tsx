@@ -54,12 +54,21 @@ export function Step1Identity({ data, update }: Props) {
       />
 
       <Input
-        label="Where can we find this document online?"
+        label="Document link"
         required
         type="url"
         value={get('s1_url')}
         onChange={(e) => update({ s1_url: e.target.value })}
-        helper="Paste the direct link. If no link, type: No URL — uploaded"
+        helper="Direct link to the file (PDF, Excel, etc.). If no file, type: No URL — uploaded"
+        placeholder="https://"
+      />
+
+      <Input
+        label="Source page"
+        type="url"
+        value={get('s1_source_url')}
+        onChange={(e) => update({ s1_source_url: e.target.value })}
+        helper="Link to the publication's landing page, if different from the document link"
         placeholder="https://"
       />
 

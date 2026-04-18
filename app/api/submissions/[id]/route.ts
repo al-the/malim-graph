@@ -47,13 +47,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       if (sub.status !== 'pending') return NextResponse.json({ error: 'Cannot edit non-pending submission' }, { status: 400 })
     }
 
+    const isSupervisorAction = (session.user.role === 'supervisor' || session.user.role === 'admin') && body.status
     const updated: Submission = {
       ...sub,
       ...body,
       updated_at: new Date().toISOString(),
+      ...(isSupervisorAction ? { reviewed_by: session.user.id, review_status: body.status } : {}),
     }
 
-    await containers.submissions().item(sub.id, sub.porter_id).replace(updated)
+    await containers.submissions().items.upsert(updated)
     await appendAuditLog({
       action: 'submission.update',
       performed_by: session.user.id,

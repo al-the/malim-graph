@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
 import { TagInput } from '@/components/ui/TagInput'
 import { Button } from '@/components/ui/Button'
-import { TOPICS, GEOGRAPHIES } from '@/lib/types'
+import { TOPICS, TOPICS_BY_AUTHORITY, GEOGRAPHIES } from '@/lib/types'
 import type { FormData } from '../SubmissionForm'
 import type { KeyStat } from '@/lib/types'
 
@@ -22,6 +22,8 @@ export function Step2Content({ data, update }: Props) {
   const topics = (data.s2_topics as string[]) || []
   const geography = (data.s2_geography as string[]) || []
   const stats = (data.s2_key_stats as KeyStat[]) || []
+  const authority = (data.s1_source_authority as string) || ''
+  const availableTopics = TOPICS_BY_AUTHORITY[authority] ?? TOPICS
 
   const addStat = () => {
     if (stats.length >= 5) return
@@ -69,9 +71,10 @@ export function Step2Content({ data, update }: Props) {
       <TagInput
         label="What topics does this document cover?"
         required
-        options={TOPICS}
+        options={availableTopics}
         value={topics}
         onChange={(v) => update({ s2_topics: v })}
+        helper={authority ? `Showing topics for ${authority}` : undefined}
       />
 
       <TagInput

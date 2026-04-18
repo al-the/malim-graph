@@ -7,9 +7,10 @@ interface TagInputProps {
   label?: string
   required?: boolean
   error?: string
+  helper?: string
 }
 
-export function TagInput({ options, value, onChange, label, required, error }: TagInputProps) {
+export function TagInput({ options, value, onChange, label, required, error, helper }: TagInputProps) {
   const toggle = (opt: string) => {
     if (value.includes(opt)) onChange(value.filter((v) => v !== opt))
     else onChange([...value, opt])
@@ -39,6 +40,7 @@ export function TagInput({ options, value, onChange, label, required, error }: T
           </button>
         ))}
       </div>
+      {helper && <p className="text-2xs text-text-secondary">{helper}</p>}
       {error && <p className="text-2xs text-danger">{error}</p>}
     </div>
   )

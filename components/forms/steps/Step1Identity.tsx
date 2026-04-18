@@ -39,7 +39,7 @@ export function Step1Identity({ data, update }: Props) {
         label="Who published this?"
         required
         value={get('s1_source_authority')}
-        onChange={(e) => update({ s1_source_authority: e.target.value })}
+        onChange={(e) => update({ s1_source_authority: e.target.value, s2_topics: [] })}
         placeholder="Select publisher…"
         options={SOURCE_AUTHORITIES.map((a) => ({ value: a, label: a }))}
       />

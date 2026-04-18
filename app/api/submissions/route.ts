@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 
   try {
     let query = 'SELECT * FROM c WHERE 1=1'
-    const params: { name: string; value: string }[] = []
+    const params: { name: string; value: unknown }[] = []
 
     if (session.user.role === 'porter') {
       query += ' AND c.porter_id = @porterId'
@@ -33,8 +33,8 @@ export async function GET(req: NextRequest) {
       params.push({ name: '@search', value: search.toLowerCase() })
     }
     query += ' ORDER BY c.submitted_at DESC OFFSET @offset LIMIT @limit'
-    params.push({ name: '@offset', value: String(offset) })
-    params.push({ name: '@limit', value: String(limit) })
+    params.push({ name: '@offset', value: offset })
+    params.push({ name: '@limit', value: limit })
 
     const { resources } = await containers
       .submissions()

@@ -8,17 +8,27 @@ import { EmptyState } from '@/components/ui/EmptyState'
 import Link from 'next/link'
 import type { Submission, SubmissionStatus } from '@/lib/types'
 
+interface ActiveTitle {
+  id: string
+  s1_title_en: string
+  s1_source_authority: string
+  status: string
+  porter_id: string
+}
+
 interface DashboardData {
   total_submitted: number
   approved: number
   pending: number
   rejected: number
   recent: Submission[]
+  all_active_titles: ActiveTitle[]
 }
 
 export function PorterDashboard({ userId }: { userId: string }) {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [titleSearch, setTitleSearch] = useState('')
 
   useEffect(() => {
     fetch('/api/dashboard')
@@ -92,6 +102,58 @@ export function PorterDashboard({ userId }: { userId: string }) {
               </span>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* All pending & approved titles — duplicate prevention */}
+      <div className="bg-bg-surface border border-border rounded-lg shadow-card overflow-hidden">
+        <div className="px-4 py-3 border-b border-border flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h2 className="text-lg font-semibold text-text-primary">All Pending &amp; Approved Titles</h2>
+            <p className="text-2xs text-text-secondary mt-0.5">Check before submitting to avoid duplicates</p>
+          </div>
+          <input
+            type="search"
+            placeholder="Search titles…"
+            value={titleSearch}
+            onChange={(e) => setTitleSearch(e.target.value)}
+            className="h-8 px-3 rounded border border-border bg-bg-subtle text-xs text-text-primary placeholder-text-disabled focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 w-56"
+          />
+        </div>
+        <div className="overflow-x-auto max-h-72 overflow-y-auto">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Source</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(data.all_active_titles || [])
+                .filter((t) =>
+                  !titleSearch || t.s1_title_en.toLowerCase().includes(titleSearch.toLowerCase())
+                )
+                .map((t) => (
+                  <tr key={t.id}>
+                    <td className="max-w-[280px] truncate" title={t.s1_title_en}>
+                      {t.porter_id === userId ? (
+                        <Link href={`/submissions/${t.id}`} className="text-accent hover:underline">
+                          {t.s1_title_en}
+                        </Link>
+                      ) : t.s1_title_en}
+                    </td>
+                    <td className="text-text-secondary">{t.s1_source_authority}</td>
+                    <td><Badge variant={t.status as SubmissionStatus} /></td>
+                  </tr>
+                ))}
+              {(data.all_active_titles || []).filter((t) =>
+                !titleSearch || t.s1_title_en.toLowerCase().includes(titleSearch.toLowerCase())
+              ).length === 0 && (
+                <EmptyState message="No active submissions found" />
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 

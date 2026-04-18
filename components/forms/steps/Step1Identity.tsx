@@ -60,7 +60,7 @@ export function Step1Identity({ data, update }: Props) {
         value={get('s1_url')}
         onChange={(e) => update({ s1_url: e.target.value })}
         helper="Direct link to the file (PDF, Excel, etc.). If no file, type: No URL — uploaded"
-        placeholder="https://"
+        placeholder="e.g. https://storage.dosm.gov.my/mei/mei_2026-01.pdf"
       />
 
       <Input
@@ -69,7 +69,7 @@ export function Step1Identity({ data, update }: Props) {
         value={get('s1_source_url')}
         onChange={(e) => update({ s1_source_url: e.target.value })}
         helper="Link to the publication's landing page, if different from the document link"
-        placeholder="https://"
+        placeholder="e.g. https://open.dosm.gov.my/publications/mei_2026-01"
       />
 
       <Input

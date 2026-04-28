@@ -34,6 +34,26 @@ function NavLink({ href, label, icon }: NavItem) {
   )
 }
 
+function LockedNavItem({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2.5 px-3 h-9 rounded text-xs cursor-default text-text-disabled select-none">
+      <span className="w-4 h-4 flex-shrink-0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4">
+          <rect x="5" y="11" width="14" height="10" rx="2" strokeWidth={1.75} />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M8 11V7a4 4 0 018 0v4" />
+        </svg>
+      </span>
+      <span className="flex-1">{label}</span>
+      <span
+        className="inline-flex items-center rounded-full border border-border bg-bg-subtle px-1.5 leading-none text-text-disabled"
+        style={{ fontSize: 9, paddingTop: 2, paddingBottom: 2 }}
+      >
+        Soon
+      </span>
+    </div>
+  )
+}
+
 const icons = {
   dashboard: (
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-4 h-4">
@@ -48,6 +68,11 @@ const icons = {
   new: (
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-4 h-4">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 4v16m8-8H4" />
+    </svg>
+  ),
+  library: (
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-4 h-4">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
     </svg>
   ),
   review: (
@@ -98,25 +123,93 @@ export function Sidebar({ role, name }: SidebarProps) {
 
       {/* Nav */}
       <nav className="flex-1 p-2 flex flex-col gap-0.5">
-        <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2">Main</p>
-        <NavLink href="/dashboard" label="Dashboard" icon={icons.dashboard} />
-        <NavLink href="/submissions" label={isPorter ? 'My Submissions' : 'All Submissions'} icon={icons.submissions} />
-        {isPorter && <NavLink href="/submissions/new" label="Submit Document" icon={icons.new} />}
 
+        {/* Knowledge Graph section label */}
+        <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2">
+          Knowledge Graph
+        </p>
+
+        {/* LAYER 0 — active */}
+        <p
+          className="text-2xs font-semibold uppercase tracking-wider px-3 py-1.5 mt-1"
+          style={{ color: 'var(--accent)' }}
+        >
+          Layer 0 — Documents
+        </p>
+        <NavLink href="/dashboard" label="Dashboard" icon={icons.dashboard} />
+        {isPorter && (
+          <NavLink href="/submissions" label="My Submissions" icon={icons.submissions} />
+        )}
+        {isSuperOrAdmin && (
+          <NavLink href="/submissions" label="All Submissions" icon={icons.submissions} />
+        )}
+        {isPorter && (
+          <NavLink href="/submissions/new" label="Submit Document" icon={icons.new} />
+        )}
+        <NavLink href="/documents" label="Document Library" icon={icons.library} />
+
+        {/* LAYER 1 — locked */}
+        <p
+          className="text-2xs font-medium uppercase tracking-wider px-3 py-1.5 mt-2 text-text-disabled"
+          style={{ opacity: 0.6 }}
+        >
+          Layer 1 — Semantic
+        </p>
+        <LockedNavItem label="Topics & Relations" />
+
+        {/* LAYER 2 — locked */}
+        <p
+          className="text-2xs font-medium uppercase tracking-wider px-3 py-1.5 mt-2 text-text-disabled"
+          style={{ opacity: 0.6 }}
+        >
+          Layer 2 — Claims
+        </p>
+        <LockedNavItem label="Claims & Evidence" />
+
+        {/* LAYER 3 — locked */}
+        <p
+          className="text-2xs font-medium uppercase tracking-wider px-3 py-1.5 mt-2 text-text-disabled"
+          style={{ opacity: 0.6 }}
+        >
+          Layer 3 — Entities
+        </p>
+        <LockedNavItem label="Organisations" />
+        <LockedNavItem label="People" />
+        <LockedNavItem label="Places" />
+
+        {/* LAYER 4 — locked */}
+        <p
+          className="text-2xs font-medium uppercase tracking-wider px-3 py-1.5 mt-2 text-text-disabled"
+          style={{ opacity: 0.6 }}
+        >
+          Layer 4 — Inference
+        </p>
+        <LockedNavItem label="Derived Insights" />
+
+        {/* Review section */}
         {isSuperOrAdmin && (
           <>
-            <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2 mt-2">Review</p>
+            <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2 mt-2">
+              Review
+            </p>
             <NavLink href="/review" label="Review Queue" icon={icons.review} />
-            {isAdmin && <NavLink href="/conflicts" label="Conflict Queue" icon={icons.conflicts} />}
+            {isAdmin && (
+              <NavLink href="/conflicts" label="Conflict Queue" icon={icons.conflicts} />
+            )}
           </>
         )}
 
+        {/* Registry + Admin sections */}
         {isAdmin && (
           <>
-            <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2 mt-2">Registry</p>
+            <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2 mt-2">
+              Registry
+            </p>
             <NavLink href="/registry" label="Indicator Registry" icon={icons.registry} />
 
-            <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2 mt-2">Admin</p>
+            <p className="text-2xs font-medium text-text-disabled uppercase tracking-wider px-3 py-2 mt-2">
+              Admin
+            </p>
             <NavLink href="/admin/users" label="User Management" icon={icons.users} />
             <NavLink href="/admin/audit" label="Audit Log" icon={icons.audit} />
           </>

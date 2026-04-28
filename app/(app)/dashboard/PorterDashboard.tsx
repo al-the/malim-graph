@@ -21,6 +21,7 @@ interface DashboardData {
   approved: number
   pending: number
   rejected: number
+  indexed: number
   recent: Submission[]
   all_active_titles: ActiveTitle[]
 }
@@ -55,9 +56,10 @@ export function PorterDashboard({ userId }: { userId: string }) {
   return (
     <div className="flex flex-col gap-6 max-w-5xl">
       {/* Stat cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Total Submitted" value={data.total_submitted} />
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <StatCard label="Layer 0 Submitted" value={data.total_submitted} />
         <StatCard label="Approved" value={data.approved} accent />
+        <StatCard label="Indexed" value={data.indexed ?? 0} sub="ingestion complete" />
         <StatCard label="Pending Review" value={data.pending} />
         <StatCard label="Rejected" value={data.rejected} />
       </div>

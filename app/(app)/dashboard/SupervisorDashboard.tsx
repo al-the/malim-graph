@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import type { Submission } from '@/lib/types'
+import type { Layer0Submission } from '@/lib/types'
 
 interface PorterRow {
   porter_id: string
@@ -35,8 +35,11 @@ interface DashboardData {
   active_porters: number
   unresolved_conflicts?: number
   pending_registrations?: PendingUser[]
-  pending_queue: Submission[]
+  pending_queue: Layer0Submission[]
   leaderboard: PorterRow[]
+  documents_indexed: number
+  chunks_generated: number
+  ingestion_queue: Layer0Submission[]
 }
 
 export function SupervisorDashboard({ role }: { role: string }) {
@@ -96,19 +99,19 @@ export function SupervisorDashboard({ role }: { role: string }) {
         <StatCard label="Active Porters" value={data.active_porters} />
       </div>
 
-      {role === 'admin' && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {data.unresolved_conflicts !== undefined && (
-            <StatCard label="Unresolved Conflicts" value={data.unresolved_conflicts} />
-          )}
+      {/* Layer 0 ingestion stats */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <StatCard label="Documents Indexed" value={data.documents_indexed ?? 0} accent sub="Layer 0 nodes" />
+        <StatCard label="Chunks Generated" value={data.chunks_generated ?? 0} sub="across all documents" />
+        {role === 'admin' && (
           <StatCard
             label="Pending Registrations"
             value={pendingRegs.length}
             accent={pendingRegs.length > 0}
             sub={pendingRegs.length > 0 ? 'Awaiting your approval' : undefined}
           />
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Pending registrations panel — admin only */}
       {role === 'admin' && pendingRegs.length > 0 && (
@@ -205,6 +208,55 @@ export function SupervisorDashboard({ role }: { role: string }) {
           </table>
         </div>
       </div>
+
+      {/* Ingestion queue */}
+      {(data.ingestion_queue?.length ?? 0) > 0 && (
+        <div className="bg-bg-surface border border-border rounded-lg shadow-card overflow-hidden">
+          <div className="px-4 py-3 border-b border-border flex items-center gap-3">
+            <h2 className="text-lg font-semibold text-text-primary">Ingestion Queue</h2>
+            <Badge variant="pending">{data.ingestion_queue.length}</Badge>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Since</th>
+                  {role === 'admin' && <th>Action</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {data.ingestion_queue.map((s) => (
+                  <tr key={s.id}>
+                    <td className="max-w-[280px] truncate" title={s.s1_title_en}>{s.s1_title_en}</td>
+                    <td>
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-2xs font-medium ${
+                        s.ingestion_status === 'failed'
+                          ? 'bg-red-100 text-danger border-red-200'
+                          : 'bg-cyan-100 text-cyan-700 border-cyan-200'
+                      }`}>
+                        {(s.ingestion_status === 'promoting' || s.ingestion_status === 'chunking') && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                        )}
+                        {s.ingestion_status}
+                      </span>
+                    </td>
+                    <td className="mono text-text-secondary">{s.updated_at.slice(0, 10)}</td>
+                    {role === 'admin' && (
+                      <td>
+                        {s.ingestion_status === 'failed' && s.promoted_doc_id && (
+                          <span className="text-2xs text-text-disabled">Retry via API</span>
+                        )}
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Porter leaderboard */}
       <div className="bg-bg-surface border border-border rounded-lg shadow-card overflow-hidden">

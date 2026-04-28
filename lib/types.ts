@@ -242,6 +242,187 @@ export const GEOGRAPHIES = [
   'Specific District',
 ] as const
 
+// ─── Layer 0 Types ───────────────────────────────────────────────────────────
+
+export type IngestionStatus =
+  | 'not_started'
+  | 'promoting'
+  | 'chunking'
+  | 'complete'
+  | 'failed'
+
+export interface DocumentNode {
+  id: string
+  source_authority: string        // partition key
+
+  node_type: 'Document'
+  layer: 0
+  doc_id: string
+  schema_version: string
+
+  title_en: string
+  title_ms: string
+  doc_type: string
+  series: string | null
+  url_canonical: string
+  language: string[]
+  published_date: string
+  ref_period_start: string | null
+  ref_period_end: string | null
+
+  doc_status: 'preliminary' | 'revised' | 'final'
+  thematic_tags: string[]
+  geographic_scope: string[]
+  summary_en: string
+  summary_ms: string | null
+
+  supersedes_doc_id: string | null
+  cited_doc_ids: string[]
+
+  provenance: {
+    submission_id: string
+    extracted_by: string
+    extracted_at: string
+    reviewed_by: string
+    reviewed_at: string
+    confidence: number
+    confidence_basis: string
+  }
+
+  temporal: {
+    valid_from: string
+    valid_until: string | null
+    is_current: boolean
+    version: number
+    superseded_by: string | null
+    as_of_date: string
+  }
+
+  edge_refs: {
+    updates: string | null
+    cites: string[]
+  }
+
+  status: 'active' | 'archived' | 'withdrawn'
+  ingested_at: string
+  last_verified_at: string | null
+}
+
+export interface ChunkNode {
+  id: string
+  doc_id: string                  // partition key
+
+  node_type: 'Chunk'
+  layer: 0
+  schema_version: string
+
+  chunk_id: string
+  text: string
+  token_count: number
+  language: 'en' | 'ms' | 'mixed'
+
+  page_ref: number | null
+  chunk_index: number
+  section_heading: string | null
+
+  claims_extracted: string[]
+
+  ingested_at: string
+  source_doc_id: string
+}
+
+export interface L0Checklist {
+  url_is_direct: boolean
+  title_is_exact: boolean
+  read_document: boolean
+  is_original_work: boolean
+}
+
+export interface Layer0Submission {
+  id: string
+  layer: 0
+  porter_id: string
+  porter_name: string
+  submitted_at: string
+  updated_at: string
+  status: SubmissionStatus
+  reviewed_by: string | null
+  reviewed_at: string | null
+  review_note: string | null
+
+  // Step 1 — Identity
+  s1_title_en: string
+  s1_title_ms: string
+  s1_source_authority: string
+  s1_doc_type: string
+  s1_series: string
+  s1_url: string
+  s1_published_date: string
+  s1_ref_period_start: string | null
+  s1_ref_period_end: string | null
+  s1_language: string[]
+
+  // Step 2 — Details
+  s2_summary_en: string
+  s2_summary_ms: string
+  s2_doc_status: 'preliminary' | 'revised' | 'final' | 'not_applicable'
+  s2_updates_previous: boolean
+  s2_updates_which: string
+  s2_topics: string[]
+  s2_geography: string[]
+
+  // Checklist
+  checklist: L0Checklist
+
+  // Post-approval ingestion state
+  promoted_doc_id: string | null
+  chunks_generated: number | null
+  ingestion_status: IngestionStatus | null
+}
+
+export const LAYER0_SOURCE_AUTHORITIES = [
+  'DOSM',
+  'Bank Negara Malaysia',
+  'Bursa Malaysia',
+  'Parliament of Malaysia',
+  'LKIM',
+  'EPU',
+  'MCMC',
+  'Ministry of Health',
+  'Ministry of Education',
+  'Securities Commission',
+  'Other',
+] as const
+
+export const LAYER0_DOC_TYPES = [
+  'Statistical Report',
+  'Annual Report',
+  'Parliamentary Record',
+  'News Article',
+  'Policy or Regulation',
+  'Press Release',
+  'Research Paper',
+  'Other',
+] as const
+
+export const LAYER0_TOPICS = [
+  'Income & Poverty',
+  'Employment',
+  'Education',
+  'Health',
+  'Housing',
+  'Finance',
+  'Trade',
+  'Demographics',
+  'Environment',
+  'Politics',
+  'Corporate',
+  'Fisheries',
+  'Digital Economy',
+  'Governance',
+  'Other',
+] as const
+
 export const INDICATOR_CATEGORIES = [
   // DOSM Publication Pillars
   'Population & Demography',

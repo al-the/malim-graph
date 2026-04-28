@@ -1,11 +1,15 @@
+import { ReactNode } from 'react'
+
 interface EmptyStateProps {
   message?: string
   description?: string
+  action?: ReactNode
 }
 
 export function EmptyState({
   message = 'No data',
   description = 'Nothing to display yet.',
+  action,
 }: EmptyStateProps) {
   return (
     <tr>
@@ -21,6 +25,7 @@ export function EmptyState({
           </svg>
           <p className="text-sm font-medium text-text-secondary">{message}</p>
           <p className="text-2xs text-text-disabled">{description}</p>
+          {action && <div className="mt-2">{action}</div>}
         </div>
       </td>
     </tr>

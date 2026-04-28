@@ -21,9 +21,23 @@ export function getContainer(name: string): Container {
 }
 
 export const containers = {
-  users: () => getContainer('users'),
-  submissions: () => getContainer('submissions'),
-  indicators: () => getContainer('indicator_registry'),
-  conflicts: () => getContainer('conflicts'),
-  audit: () => getContainer('audit_log'),
+  // Layer 0
+  documents:     () => getContainer('documents'),
+  chunks:        () => getContainer('chunks'),
+  // Layer 1
+  semanticEdges: () => getContainer('semantic_edges'),
+  // Layer 2
+  claims:        () => getContainer('claims'),
+  datapoints:    () => getContainer('datapoints'),
+  conflicts:     () => getContainer('conflicts'),
+  // Layer 3
+  entities:      () => getContainer('entities'),
+  entityEdges:   () => getContainer('entity_edges'),
+  // Layer 4
+  inferences:    () => getContainer('inferences'),
+  // Infrastructure
+  submissions:   () => getContainer('submissions'),
+  users:         () => getContainer('users'),
+  indicators:    () => getContainer('indicator_registry'),
+  audit:         () => getContainer('audit_log'),
 }

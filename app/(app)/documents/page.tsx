@@ -1,21 +1,17 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { PageHeader } from '@/components/layout/PageHeader'
-import { Layer0SubmissionForm } from '@/components/forms/Layer0SubmissionForm'
+import { DocumentLibrary } from './DocumentLibrary'
 
-export default async function NewSubmissionPage() {
+export default async function DocumentsPage() {
   const session = await auth()
   if (!session?.user) redirect('/login')
-  if (session.user.role !== 'porter') redirect('/dashboard')
 
   return (
     <div className="flex flex-col h-full">
-      <PageHeader
-        title="Submit Document"
-        breadcrumb={['MalimDB', 'Layer 0', 'Submit']}
-      />
+      <PageHeader title="Document Library" breadcrumb={['MalimDB', 'Layer 0']} />
       <div className="flex-1 p-6 overflow-y-auto">
-        <Layer0SubmissionForm />
+        <DocumentLibrary role={session.user.role} />
       </div>
     </div>
   )
